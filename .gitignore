@@ -1,0 +1,8 @@
+# Build output
+build/
+bin/
+*.jar
+
+# IDE / OS
+.DS_Store
+*.class
