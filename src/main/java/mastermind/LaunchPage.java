@@ -5,6 +5,8 @@ import static mastermind.GameConstants.MODE_EXTREME;
 import static mastermind.GameConstants.MODE_HARD;
 import static mastermind.GameConstants.MODE_NORMAL;
 
+import mastermind.GameConstants;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
@@ -15,8 +17,8 @@ import javax.swing.JPanel;
 
 public class LaunchPage {
 
-    private static final int PANEL_WIDTH = 450;
-    private static final int PANEL_HEIGHT = 700;
+    private static final int PANEL_WIDTH = GameConstants.FRAME_WIDTH;
+    private static final int PANEL_HEIGHT = GameConstants.FRAME_HEIGHT;
 
     private static final class ModeConfig {
         final String name;

@@ -1,6 +1,8 @@
 package mastermind;
 
 import static mastermind.GameConstants.COLS;
+import static mastermind.GameConstants.FRAME_HEIGHT;
+import static mastermind.GameConstants.FRAME_WIDTH;
 import static mastermind.GameConstants.PEG_SIZE;
 import static mastermind.GameConstants.RESULT_LOSE;
 import static mastermind.GameConstants.RESULT_WIN;
@@ -14,9 +16,10 @@ import javax.swing.JPanel;
 
 public class Result {
 
-    private static final int PANEL_WIDTH = 450;
-    private static final int PANEL_HEIGHT = 700;
+    private static final int PANEL_WIDTH = FRAME_WIDTH;
+    private static final int PANEL_HEIGHT = FRAME_HEIGHT;
 
+    private final Frame frame;
     private final JLabel winStatus = new Label("CONGRATULATIONS!!", 30);
     private final JLabel loseStatus = new Label("GAME OVER!!", 30);
     private final JLabel menuLabel = new Label("menu_label", "BACK TO THE MENU", 15);
@@ -24,11 +27,13 @@ public class Result {
     private final JLabel[] solutionColours = new JLabel[COLS];
 
     Result(Frame frame, int row, String com1, String com2, String com3, String com4, int status) {
+        this.frame = frame;
         String[] comb = new String[] { com1, com2, com3, com4 };
-        int[] xPos = { 85, 155, 225, 295 };
+        final int solutionY = 310;
+        final int solutionStartX = 85;
         for (int i = 0; i < COLS; i++) {
             solutionColours[i] = new PinColour(comb[i]);
-            solutionColours[i].setBounds(xPos[i], 310, PEG_SIZE, PEG_SIZE);
+            solutionColours[i].setBounds(solutionStartX + i * PEG_SIZE, solutionY, PEG_SIZE, PEG_SIZE);
         }
 
         JPanel panel = new JPanel();

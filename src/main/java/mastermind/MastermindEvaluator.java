@@ -39,11 +39,11 @@ public final class MastermindEvaluator {
                 } else if (secret[i].equals(guess[j])) {
                     numWhite++;
                     playerDuplicate++;
-                    if (j == 3) {
+                    if (j == COLS - 1) {
                         numWhite = numWhite - playerDuplicate + 1;
                         playerDuplicate = 0;
                     }
-                } else if ((j == 3) && (playerDuplicate > 0)) {
+                } else if ((j == COLS - 1) && (playerDuplicate > 0)) {
                     numWhite = numWhite - playerDuplicate + 1;
                     playerDuplicate = 0;
                 }
@@ -62,7 +62,7 @@ public final class MastermindEvaluator {
                 }
             }
             numWhite = numWhite - (serverDuplicate - sameColour1);
-            if (sameColour1 == 4) {
+            if (sameColour1 == COLS) {
                 numWhite -= 1;
             } else if (sameColour1 == 0) {
                 numWhite += 3;

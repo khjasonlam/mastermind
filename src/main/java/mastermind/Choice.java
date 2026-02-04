@@ -5,6 +5,8 @@ import static mastermind.GameConstants.COLS;
 import static mastermind.GameConstants.EMPTY;
 import static mastermind.GameConstants.MODE_TWO_PLAYERS;
 import static mastermind.GameConstants.PEG_SIZE;
+import static mastermind.GameConstants.FRAME_HEIGHT;
+import static mastermind.GameConstants.FRAME_WIDTH;
 import static mastermind.GameConstants.getImageIcon;
 
 import java.awt.Color;
@@ -19,8 +21,8 @@ import javax.swing.JPanel;
 
 public class Choice {
 
-    private static final int PANEL_WIDTH = 450;
-    private static final int PANEL_HEIGHT = 700;
+    private static final int PANEL_WIDTH = FRAME_WIDTH;
+    private static final int PANEL_HEIGHT = FRAME_HEIGHT;
 
     private final Frame frame;
     private final List<JLabel> emptySlots = new ArrayList<>(COLS);
@@ -69,8 +71,9 @@ public class Choice {
         undoLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (position > 0 && position <= COLS) {
-                    emptySlots.get(--position).setIcon(getImageIcon(EMPTY));
+                if (position > 0) {
+                    position--;
+                    emptySlots.get(position).setIcon(getImageIcon(EMPTY));
                 }
             }
         });

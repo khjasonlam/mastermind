@@ -5,6 +5,8 @@ import static mastermind.GameConstants.CENTRE_LEFT;
 import static mastermind.GameConstants.COLS;
 import static mastermind.GameConstants.EMPTY;
 import static mastermind.GameConstants.EMPTY_SMALL;
+import static mastermind.GameConstants.FRAME_HEIGHT;
+import static mastermind.GameConstants.FRAME_WIDTH;
 import static mastermind.GameConstants.HINT_COL2;
 import static mastermind.GameConstants.HINT_LEFT;
 import static mastermind.GameConstants.MODE_EASY;
@@ -63,7 +65,7 @@ public class MainMasterMind implements ActionListener {
     private int currentSlotIndex;
     private int guessPosition;
     private int currentRow;
-    private int timerStarted;
+    private boolean timerStarted;
 
     private final JLabel[] colourLabels = new JLabel[ALL_COLOURS.length];
     private JLabel undoLabel;
@@ -96,13 +98,13 @@ public class MainMasterMind implements ActionListener {
     }
 
     private static int hintX(int index) {
-        int c = index % 4;
+        int c = index % COLS;
         return c % 2 == 0 ? HINT_LEFT : HINT_COL2;
     }
 
     private static int hintY(int index) {
-        int row = index / 4;
-        int sub = (index % 4) >= 2 ? 25 : 0;
+        int row = index / COLS;
+        int sub = (index % COLS) >= 2 ? 25 : 0;
         return (ROWS - 1 - row) * ROW_HEIGHT + sub;
     }
 
@@ -148,14 +150,13 @@ public class MainMasterMind implements ActionListener {
         exitLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
+                if (timer != null) timer.stop();
                 setPanelsVisible(false);
-                if (timer != null)
-                    timer.stop();
                 new LaunchPage(frame);
             }
         });
 
-        if (timerStarted == 0) {
+        if (!timerStarted) {
             startTimer();
         }
     }
@@ -165,7 +166,7 @@ public class MainMasterMind implements ActionListener {
         minutes = TIMER_MINUTES;
         timer = new Timer(1000, this);
         timer.start();
-        timerStarted = 1;
+        timerStarted = true;
     }
 
     @Override
@@ -178,12 +179,10 @@ public class MainMasterMind implements ActionListener {
             seconds--;
         }
         if (seconds == 0 && minutes == 0) {
-            if (timer != null)
-                timer.stop();
+            if (timer != null) timer.stop();
             timerLabel.setText("TIME'S UP");
             setPanelsVisible(false);
-            new Result(frame, currentRow, serverCombination[0], serverCombination[1],
-                    serverCombination[2], serverCombination[3], RESULT_TIME_UP);
+            showResult(RESULT_TIME_UP);
         }
     }
 
@@ -222,18 +221,22 @@ public class MainMasterMind implements ActionListener {
         }
 
         if (numBlack == COLS) {
-            if (timer != null)
-                timer.stop();
-            setPanelsVisible(false);
-            new Result(frame, currentRow, serverCombination[0], serverCombination[1],
-                    serverCombination[2], serverCombination[3], RESULT_WIN);
+            stopTimerAndShowResult(RESULT_WIN);
         } else if (currentSlotIndex >= TOTAL_PEGS) {
-            if (timer != null)
-                timer.stop();
-            setPanelsVisible(false);
-            new Result(frame, currentRow, serverCombination[0], serverCombination[1],
-                    serverCombination[2], serverCombination[3], RESULT_LOSE);
+            stopTimerAndShowResult(RESULT_LOSE);
         }
+    }
+
+    private void stopTimerAndShowResult(int resultStatus) {
+        if (timer != null) timer.stop();
+        setPanelsVisible(false);
+        showResult(resultStatus);
+    }
+
+    private void showResult(int resultStatus) {
+        new Result(frame, currentRow,
+                serverCombination[0], serverCombination[1], serverCombination[2], serverCombination[3],
+                resultStatus);
     }
 
     private void setHintIcon(int pos, String colour) {
@@ -243,22 +246,22 @@ public class MainMasterMind implements ActionListener {
     private void initComponents() {
         centrePanel = new JPanel();
         centrePanel.setBackground(Color.darkGray);
-        centrePanel.setBounds(75, 0, 300, 700);
+        centrePanel.setBounds(75, 0, 300, FRAME_HEIGHT);
         centrePanel.setLayout(null);
 
         leftPanel = new JPanel();
         leftPanel.setBackground(Color.darkGray);
-        leftPanel.setBounds(0, 0, 75, 700);
+        leftPanel.setBounds(0, 0, 75, FRAME_HEIGHT);
         leftPanel.setLayout(null);
 
         rightPanel = new JPanel();
         rightPanel.setBackground(Color.darkGray);
-        rightPanel.setBounds(375, 0, 75, 700);
+        rightPanel.setBounds(375, 0, 75, FRAME_HEIGHT);
         rightPanel.setLayout(null);
 
         bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.darkGray);
-        bottomPanel.setBounds(0, 610, 450, 90);
+        bottomPanel.setBounds(0, 610, FRAME_WIDTH, 90);
         bottomPanel.setLayout(null);
 
         pegSlots = new ArrayList<>(TOTAL_PEGS);
@@ -337,9 +340,9 @@ public class MainMasterMind implements ActionListener {
                 break;
         }
         modeLabel.setText(modeText);
-        modeLabel.setBounds(0, 35, 450, 20);
+        modeLabel.setBounds(0, 35, FRAME_WIDTH, 20);
         bottomPanel.add(modeLabel);
-        timerLabel.setBounds(0, 5, 450, 30);
+        timerLabel.setBounds(0, 5, FRAME_WIDTH, 30);
         bottomPanel.add(timerLabel);
 
         frame.add(bottomPanel);

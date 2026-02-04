@@ -10,6 +10,10 @@ public final class GameConstants {
     /** Classpath path for images (use with getResource). */
     public static final String IMAGE_PATH = "/images/";
 
+    /** Main window size. */
+    public static final int FRAME_WIDTH = 450;
+    public static final int FRAME_HEIGHT = 700;
+
     public static final int ROWS = 10;
     public static final int COLS = 4;
     public static final int TOTAL_PEGS = ROWS * COLS; // 40
