@@ -1,7 +1,10 @@
 package mastermind;
 
 import static mastermind.GameConstants.ALL_COLOURS;
+import static mastermind.GameConstants.BOTTOM_PANEL_HEIGHT;
+import static mastermind.GameConstants.BOTTOM_PANEL_Y;
 import static mastermind.GameConstants.CENTRE_LEFT;
+import static mastermind.GameConstants.CENTRE_PANEL_WIDTH;
 import static mastermind.GameConstants.COLS;
 import static mastermind.GameConstants.EMPTY;
 import static mastermind.GameConstants.EMPTY_SMALL;
@@ -9,6 +12,7 @@ import static mastermind.GameConstants.FRAME_HEIGHT;
 import static mastermind.GameConstants.FRAME_WIDTH;
 import static mastermind.GameConstants.HINT_COL2;
 import static mastermind.GameConstants.HINT_LEFT;
+import static mastermind.GameConstants.MODE_DISPLAY_NAMES;
 import static mastermind.GameConstants.MODE_EASY;
 import static mastermind.GameConstants.MODE_HARD;
 import static mastermind.GameConstants.PEG_SIZE;
@@ -16,10 +20,6 @@ import static mastermind.GameConstants.PEG_SMALL_SIZE;
 import static mastermind.GameConstants.RESULT_LOSE;
 import static mastermind.GameConstants.RESULT_TIME_UP;
 import static mastermind.GameConstants.RESULT_WIN;
-import static mastermind.GameConstants.BOTTOM_PANEL_HEIGHT;
-import static mastermind.GameConstants.BOTTOM_PANEL_Y;
-import static mastermind.GameConstants.CENTRE_PANEL_WIDTH;
-import static mastermind.GameConstants.MODE_DISPLAY_NAMES;
 import static mastermind.GameConstants.ROWS;
 import static mastermind.GameConstants.ROW_HEIGHT;
 import static mastermind.GameConstants.SIDE_PANEL_WIDTH;
@@ -147,7 +147,8 @@ public class MainMasterMind implements ActionListener {
         exitLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (timer != null) timer.stop();
+                if (timer != null)
+                    timer.stop();
                 setPanelsVisible(false);
                 new LaunchPage(frame);
             }
@@ -176,7 +177,8 @@ public class MainMasterMind implements ActionListener {
             seconds--;
         }
         if (seconds == 0 && minutes == 0) {
-            if (timer != null) timer.stop();
+            if (timer != null)
+                timer.stop();
             timerLabel.setText("TIME'S UP");
             setPanelsVisible(false);
             showResult(RESULT_TIME_UP);
@@ -225,7 +227,8 @@ public class MainMasterMind implements ActionListener {
     }
 
     private void stopTimerAndShowResult(int resultStatus) {
-        if (timer != null) timer.stop();
+        if (timer != null)
+            timer.stop();
         setPanelsVisible(false);
         showResult(resultStatus);
     }

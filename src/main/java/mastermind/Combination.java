@@ -21,7 +21,8 @@ public final class Combination {
     /**
      * @param frame         the main frame
      * @param mode          game mode constant
-     * @param playerChoices for two-player mode: length-COLS array of chosen colours; for one-player: null
+     * @param playerChoices for two-player mode: length-COLS array of chosen
+     *                      colours; for one-player: null
      */
     public Combination(Frame frame, int mode, String[] playerChoices) {
         String[] palette = (mode == MODE_EASY || mode == MODE_HARD) ? COLOURS_6 : COLOURS_8;

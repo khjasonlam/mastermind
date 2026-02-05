@@ -3,10 +3,10 @@ package mastermind;
 import static mastermind.GameConstants.ALL_COLOURS;
 import static mastermind.GameConstants.COLS;
 import static mastermind.GameConstants.EMPTY;
-import static mastermind.GameConstants.MODE_TWO_PLAYERS;
-import static mastermind.GameConstants.PEG_SIZE;
 import static mastermind.GameConstants.FRAME_HEIGHT;
 import static mastermind.GameConstants.FRAME_WIDTH;
+import static mastermind.GameConstants.MODE_TWO_PLAYERS;
+import static mastermind.GameConstants.PEG_SIZE;
 import static mastermind.GameConstants.getImageIcon;
 
 import java.awt.Color;
