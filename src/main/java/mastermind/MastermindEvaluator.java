@@ -14,29 +14,28 @@ public final class MastermindEvaluator {
     /**
      * Computes feedback for a guess against the secret.
      *
-     * @param secret           the secret code (length COLS)
-     * @param guess            the current guess (length COLS)
-     * @param serverDuplicate  number of duplicate colour groups in the secret (0,
-     *                         1, 2, 3, or 6)
-     * @param duplicatedColour up to 2 colour names that are duplicated in the
-     *                         secret (for adjustment)
+     * @param secret the secret code (holds colours and duplicate info)
+     * @param guess  the current guess (length COLS)
      */
-    public static PegFeedback evaluate(String[] secret, String[] guess,
-            int serverDuplicate, String[] duplicatedColour) {
+    public static PegFeedback evaluate(SecretCode secret, String[] guess) {
+        String[] secretColours = secret.getColours();
+        int serverDuplicate = secret.getServerDuplicate();
+        String[] duplicatedColour = secret.getDuplicatedColour();
+
         int numBlack = 0;
         int numWhite = 0;
         int playerDuplicate = 0;
 
         for (int i = 0; i < COLS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (secret[i].equals(guess[j]) && (i == j)) {
+                if (secretColours[i].equals(guess[j]) && (i == j)) {
                     numBlack++;
                     if (playerDuplicate > 0) {
                         numWhite -= playerDuplicate;
                     }
                     playerDuplicate = 0;
                     break;
-                } else if (secret[i].equals(guess[j])) {
+                } else if (secretColours[i].equals(guess[j])) {
                     numWhite++;
                     playerDuplicate++;
                     if (j == COLS - 1) {

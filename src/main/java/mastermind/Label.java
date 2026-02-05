@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-@SuppressWarnings("serial")
 public class Label extends JLabel {
 
     private static final Cursor HAND = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);

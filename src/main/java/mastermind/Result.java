@@ -19,16 +19,14 @@ public class Result {
     private static final int PANEL_WIDTH = FRAME_WIDTH;
     private static final int PANEL_HEIGHT = FRAME_HEIGHT;
 
-    private final Frame frame;
     private final JLabel winStatus = new Label("CONGRATULATIONS!!", 30);
     private final JLabel loseStatus = new Label("GAME OVER!!", 30);
     private final JLabel menuLabel = new Label("menu_label", "BACK TO THE MENU", 15);
     private final JLabel description = new Label(null, 15);
     private final JLabel[] solutionColours = new JLabel[COLS];
 
-    Result(Frame frame, int row, String com1, String com2, String com3, String com4, int status) {
-        this.frame = frame;
-        String[] comb = new String[] { com1, com2, com3, com4 };
+    Result(Frame frame, int row, String[] solution, int status) {
+        String[] comb = solution.clone();
         final int solutionY = 310;
         final int solutionStartX = 85;
         for (int i = 0; i < COLS; i++) {

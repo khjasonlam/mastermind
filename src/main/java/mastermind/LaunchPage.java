@@ -5,8 +5,6 @@ import static mastermind.GameConstants.MODE_EXTREME;
 import static mastermind.GameConstants.MODE_HARD;
 import static mastermind.GameConstants.MODE_NORMAL;
 
-import mastermind.GameConstants;
-
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
@@ -123,7 +121,7 @@ public class LaunchPage {
             @Override
             public void mouseReleased(MouseEvent e) {
                 modePanel.setVisible(false);
-                new Combination(frame, config.modeId, null, null, null, null);
+                new Combination(frame, config.modeId, null);
             }
         });
     }

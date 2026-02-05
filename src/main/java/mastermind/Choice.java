@@ -83,9 +83,7 @@ public class Choice {
             public void mouseClicked(MouseEvent e) {
                 if (position == COLS) {
                     panel.setVisible(false);
-                    new Combination(frame, MODE_TWO_PLAYERS,
-                            playerCombination[0], playerCombination[1],
-                            playerCombination[2], playerCombination[3]);
+                    new Combination(frame, MODE_TWO_PLAYERS, playerCombination);
                 } else {
                     errorLabel.setVisible(true);
                 }

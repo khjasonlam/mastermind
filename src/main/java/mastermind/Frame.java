@@ -2,7 +2,6 @@ package mastermind;
 
 import javax.swing.JFrame;
 
-@SuppressWarnings("serial")
 public class Frame extends JFrame {
 
     public Frame(String title, int width, int height) {

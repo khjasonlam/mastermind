@@ -45,9 +45,8 @@ public class MainMasterMind implements ActionListener {
 
     private final Frame frame;
     private final int mode;
+    private final SecretCode secretCode;
     private final String[] serverCombination = new String[COLS];
-    private final String[] duplicatedColour = new String[2];
-    private final int serverDuplicate;
 
     private JPanel centrePanel;
     private JPanel leftPanel;
@@ -73,17 +72,11 @@ public class MainMasterMind implements ActionListener {
     private JLabel timerLabel = new Label(null, 20);
     private JLabel modeLabel = new Label(null, 15);
 
-    public MainMasterMind(Frame frame, int mode, String com1, String com2, String com3, String com4,
-            int serverDup, String dupColour1, String dupColour2) {
+    public MainMasterMind(Frame frame, int mode, SecretCode secret) {
         this.frame = frame;
         this.mode = mode;
-        this.serverDuplicate = serverDup;
-        this.serverCombination[0] = com1;
-        this.serverCombination[1] = com2;
-        this.serverCombination[2] = com3;
-        this.serverCombination[3] = com4;
-        this.duplicatedColour[0] = dupColour1;
-        this.duplicatedColour[1] = dupColour2;
+        this.secretCode = secret;
+        System.arraycopy(secret.getColours(), 0, this.serverCombination, 0, COLS);
 
         initComponents();
         initParams();
@@ -208,7 +201,7 @@ public class MainMasterMind implements ActionListener {
     }
 
     private void verifyAndShowHints() {
-        PegFeedback feedback = evaluate(serverCombination, currentGuess, serverDuplicate, duplicatedColour);
+        PegFeedback feedback = evaluate(secretCode, currentGuess);
         int numWhite = feedback.getWhite();
         int numBlack = feedback.getBlack();
 
@@ -234,9 +227,7 @@ public class MainMasterMind implements ActionListener {
     }
 
     private void showResult(int resultStatus) {
-        new Result(frame, currentRow,
-                serverCombination[0], serverCombination[1], serverCombination[2], serverCombination[3],
-                resultStatus);
+        new Result(frame, currentRow, serverCombination, resultStatus);
     }
 
     private void setHintIcon(int pos, String colour) {
