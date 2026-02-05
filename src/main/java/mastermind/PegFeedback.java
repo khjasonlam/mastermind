@@ -9,6 +9,9 @@ public final class PegFeedback {
     private final int white;
 
     public PegFeedback(int black, int white) {
+        if (black < 0 || white < 0) {
+            throw new IllegalArgumentException("black and white must be non-negative");
+        }
         this.black = black;
         this.white = white;
     }

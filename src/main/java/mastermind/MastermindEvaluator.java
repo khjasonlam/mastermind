@@ -54,7 +54,7 @@ public final class MastermindEvaluator {
         if (serverDuplicate == 6) {
             numWhite = 0;
         }
-        if (serverDuplicate == 3 && duplicatedColour != null && duplicatedColour[0] != null) {
+        if (serverDuplicate == 3 && duplicatedColour[0] != null) {
             for (int i = 0; i < COLS; i++) {
                 if (duplicatedColour[0].equals(guess[i])) {
                     sameColour1++;
@@ -67,8 +67,7 @@ public final class MastermindEvaluator {
                 numWhite += 3;
             }
         }
-        if (serverDuplicate == 2 && duplicatedColour != null && duplicatedColour[0] != null
-                && duplicatedColour[1] != null) {
+        if (serverDuplicate == 2 && duplicatedColour[0] != null && duplicatedColour[1] != null) {
             for (int i = 0; i < COLS; i++) {
                 if (duplicatedColour[0].equals(guess[i])) {
                     sameColour1++;
@@ -84,7 +83,7 @@ public final class MastermindEvaluator {
                 numWhite -= 1;
             }
         }
-        if (serverDuplicate == 1 && duplicatedColour != null && duplicatedColour[0] != null) {
+        if (serverDuplicate == 1 && duplicatedColour[0] != null) {
             for (int i = 0; i < COLS; i++) {
                 if (duplicatedColour[0].equals(guess[i])) {
                     sameColour1++;

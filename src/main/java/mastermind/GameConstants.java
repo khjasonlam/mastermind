@@ -24,6 +24,12 @@ public final class GameConstants {
     public static final int HINT_LEFT = 5;
     public static final int HINT_COL2 = 30;
 
+    /** Layout: side panel width, centre panel width, bottom panel Y and height. */
+    public static final int SIDE_PANEL_WIDTH = 75;
+    public static final int CENTRE_PANEL_WIDTH = 300;
+    public static final int BOTTOM_PANEL_Y = 610;
+    public static final int BOTTOM_PANEL_HEIGHT = 90;
+
     /** Colours for 6-colour mode (easy/hard). */
     public static final String[] COLOURS_6 = {
             "Red", "Blue", "Orange", "Violet", "Green", "Yellow"
@@ -64,6 +70,11 @@ public final class GameConstants {
     public static final int MODE_HARD = 3;
     public static final int MODE_EXTREME = 4;
     public static final int MODE_TWO_PLAYERS = 5;
+
+    /** Display name for each mode (index = mode id, 0 unused). */
+    public static final String[] MODE_DISPLAY_NAMES = {
+            "", "EASY", "NORMAL", "HARD", "EXTREME", "TWO PLAYERS"
+    };
 
     private GameConstants() {
     }

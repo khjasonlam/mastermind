@@ -26,6 +26,9 @@ public class Result {
     private final JLabel[] solutionColours = new JLabel[COLS];
 
     Result(Frame frame, int row, String[] solution, int status) {
+        if (solution == null || solution.length != COLS) {
+            throw new IllegalArgumentException("solution must be non-null and length " + COLS);
+        }
         String[] comb = solution.clone();
         final int solutionY = 310;
         final int solutionStartX = 85;

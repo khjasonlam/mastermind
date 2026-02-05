@@ -1,5 +1,6 @@
 package mastermind;
 
+import static mastermind.GameConstants.MODE_DISPLAY_NAMES;
 import static mastermind.GameConstants.MODE_EASY;
 import static mastermind.GameConstants.MODE_EXTREME;
 import static mastermind.GameConstants.MODE_HARD;
@@ -19,22 +20,24 @@ public class LaunchPage {
     private static final int PANEL_HEIGHT = GameConstants.FRAME_HEIGHT;
 
     private static final class ModeConfig {
-        final String name;
         final int modeId;
         final String description;
 
-        ModeConfig(String name, int modeId, String description) {
-            this.name = name;
+        ModeConfig(int modeId, String description) {
             this.modeId = modeId;
             this.description = description;
+        }
+
+        String displayName() {
+            return modeId >= 0 && modeId < MODE_DISPLAY_NAMES.length ? MODE_DISPLAY_NAMES[modeId] : "";
         }
     }
 
     private static final ModeConfig[] ONE_PLAYER_MODES = {
-            new ModeConfig("EASY", MODE_EASY, "(6 colours without duplicate)"),
-            new ModeConfig("NORMAL", MODE_NORMAL, "(8 colours without duplicate)"),
-            new ModeConfig("HARD", MODE_HARD, "(6 colours include duplicate)"),
-            new ModeConfig("EXTREME", MODE_EXTREME, "(8 colours include duplicate)")
+            new ModeConfig(MODE_EASY, "(6 colours without duplicate)"),
+            new ModeConfig(MODE_NORMAL, "(8 colours without duplicate)"),
+            new ModeConfig(MODE_HARD, "(6 colours include duplicate)"),
+            new ModeConfig(MODE_EXTREME, "(8 colours include duplicate)")
     };
 
     private static final int[] MODE_Y = { 300, 350, 400, 450 };
@@ -91,7 +94,7 @@ public class LaunchPage {
         modePanel.add(description);
         modePanel.add(back);
         for (int i = 0; i < ONE_PLAYER_MODES.length; i++) {
-            JLabel lbl = new Label(ONE_PLAYER_MODES[i].name, 15);
+            JLabel lbl = new Label(ONE_PLAYER_MODES[i].displayName(), 15);
             lbl.setBounds(0, MODE_Y[i], PANEL_WIDTH, 20);
             modePanel.add(lbl);
             attachModeListener(lbl, ONE_PLAYER_MODES[i]);
@@ -152,8 +155,6 @@ public class LaunchPage {
             public void mouseReleased(MouseEvent e) {
                 mainPanel.setVisible(false);
                 modePanel.add(title);
-                modePanel.add(description);
-                modePanel.add(back);
                 modePanel.setVisible(true);
             }
         });
@@ -171,7 +172,6 @@ public class LaunchPage {
             public void mouseReleased(MouseEvent e) {
                 mainPanel.setVisible(false);
                 instructionPanel.add(title);
-                instructionPanel.add(back);
                 instructionPanel.setVisible(true);
             }
         });

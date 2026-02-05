@@ -29,12 +29,12 @@ public class Choice {
     private final String[] playerCombination = new String[COLS];
     private int position;
 
-    private final JLabel instructionLabel = new Label("Choose 4 pins from the following colours", 15);
+    private final JLabel instructionLabel = new Label("Choose " + COLS + " pins from the following colours", 15);
     private final JLabel choiceLabel = new Label("your pattern:", 15);
     private final JLabel submitLabel = new Label("submit_label", "SUBMIT", 15);
     private final JLabel undoLabel = new Label("undo_label", "UNDO", 15);
     private final JLabel backLabel = new Label("back_label", "BACK TO THE MENU", 15);
-    private final JLabel errorLabel = new Label("CHOOSE 4 PINS BEFORE YOU SUBMIT!!", 15);
+    private final JLabel errorLabel = new Label("CHOOSE " + COLS + " PINS BEFORE YOU SUBMIT!!", 15);
 
     private final JLabel[] colourLabels = new JLabel[ALL_COLOURS.length];
     private final JPanel panel = new JPanel();
@@ -83,7 +83,7 @@ public class Choice {
             public void mouseClicked(MouseEvent e) {
                 if (position == COLS) {
                     panel.setVisible(false);
-                    new Combination(frame, MODE_TWO_PLAYERS, playerCombination);
+                    new Combination(frame, MODE_TWO_PLAYERS, playerCombination.clone());
                 } else {
                     errorLabel.setVisible(true);
                 }

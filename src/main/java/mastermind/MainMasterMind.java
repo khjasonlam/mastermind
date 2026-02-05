@@ -10,17 +10,19 @@ import static mastermind.GameConstants.FRAME_WIDTH;
 import static mastermind.GameConstants.HINT_COL2;
 import static mastermind.GameConstants.HINT_LEFT;
 import static mastermind.GameConstants.MODE_EASY;
-import static mastermind.GameConstants.MODE_EXTREME;
 import static mastermind.GameConstants.MODE_HARD;
-import static mastermind.GameConstants.MODE_NORMAL;
-import static mastermind.GameConstants.MODE_TWO_PLAYERS;
 import static mastermind.GameConstants.PEG_SIZE;
 import static mastermind.GameConstants.PEG_SMALL_SIZE;
 import static mastermind.GameConstants.RESULT_LOSE;
 import static mastermind.GameConstants.RESULT_TIME_UP;
 import static mastermind.GameConstants.RESULT_WIN;
+import static mastermind.GameConstants.BOTTOM_PANEL_HEIGHT;
+import static mastermind.GameConstants.BOTTOM_PANEL_Y;
+import static mastermind.GameConstants.CENTRE_PANEL_WIDTH;
+import static mastermind.GameConstants.MODE_DISPLAY_NAMES;
 import static mastermind.GameConstants.ROWS;
 import static mastermind.GameConstants.ROW_HEIGHT;
+import static mastermind.GameConstants.SIDE_PANEL_WIDTH;
 import static mastermind.GameConstants.TOTAL_PEGS;
 import static mastermind.GameConstants.getImageIcon;
 import static mastermind.MastermindEvaluator.evaluate;
@@ -32,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -46,7 +49,6 @@ public class MainMasterMind implements ActionListener {
     private final Frame frame;
     private final int mode;
     private final SecretCode secretCode;
-    private final String[] serverCombination = new String[COLS];
 
     private JPanel centrePanel;
     private JPanel leftPanel;
@@ -55,7 +57,7 @@ public class MainMasterMind implements ActionListener {
 
     private List<JLabel> pegSlots;
     private List<JLabel> hints;
-    private List<Integer> rowEndPositions;
+    private static final List<Integer> ROW_END_POSITIONS = buildRowEndPositions();
     private String[] currentGuess = new String[COLS];
 
     private Timer timer;
@@ -76,7 +78,6 @@ public class MainMasterMind implements ActionListener {
         this.frame = frame;
         this.mode = mode;
         this.secretCode = secret;
-        System.arraycopy(secret.getColours(), 0, this.serverCombination, 0, COLS);
 
         initComponents();
         initParams();
@@ -101,12 +102,15 @@ public class MainMasterMind implements ActionListener {
         return (ROWS - 1 - row) * ROW_HEIGHT + sub;
     }
 
-    private void initParams() {
-        rowEndPositions = new ArrayList<>();
+    private static List<Integer> buildRowEndPositions() {
+        List<Integer> list = new ArrayList<>(ROWS);
         for (int r = 1; r <= ROWS; r++) {
-            rowEndPositions.add(r * COLS - 1);
+            list.add(r * COLS - 1);
         }
+        return Collections.unmodifiableList(list);
+    }
 
+    private void initParams() {
         for (int i = 0; i < ALL_COLOURS.length; i++) {
             final String colour = ALL_COLOURS[i];
             final JLabel colourLabel = colourLabels[i];
@@ -193,7 +197,7 @@ public class MainMasterMind implements ActionListener {
             guessPosition++;
             currentSlotIndex++;
         }
-        if (rowEndPositions.contains(currentSlotIndex - 1)) {
+        if (ROW_END_POSITIONS.contains(currentSlotIndex - 1)) {
             guessPosition = 0;
             verifyAndShowHints();
             currentRow++;
@@ -227,7 +231,7 @@ public class MainMasterMind implements ActionListener {
     }
 
     private void showResult(int resultStatus) {
-        new Result(frame, currentRow, serverCombination, resultStatus);
+        new Result(frame, currentRow, secretCode.getColours(), resultStatus);
     }
 
     private void setHintIcon(int pos, String colour) {
@@ -237,22 +241,22 @@ public class MainMasterMind implements ActionListener {
     private void initComponents() {
         centrePanel = new JPanel();
         centrePanel.setBackground(Color.darkGray);
-        centrePanel.setBounds(75, 0, 300, FRAME_HEIGHT);
+        centrePanel.setBounds(SIDE_PANEL_WIDTH, 0, CENTRE_PANEL_WIDTH, FRAME_HEIGHT);
         centrePanel.setLayout(null);
 
         leftPanel = new JPanel();
         leftPanel.setBackground(Color.darkGray);
-        leftPanel.setBounds(0, 0, 75, FRAME_HEIGHT);
+        leftPanel.setBounds(0, 0, SIDE_PANEL_WIDTH, FRAME_HEIGHT);
         leftPanel.setLayout(null);
 
         rightPanel = new JPanel();
         rightPanel.setBackground(Color.darkGray);
-        rightPanel.setBounds(375, 0, 75, FRAME_HEIGHT);
+        rightPanel.setBounds(SIDE_PANEL_WIDTH + CENTRE_PANEL_WIDTH, 0, SIDE_PANEL_WIDTH, FRAME_HEIGHT);
         rightPanel.setLayout(null);
 
         bottomPanel = new JPanel();
         bottomPanel.setBackground(Color.darkGray);
-        bottomPanel.setBounds(0, 610, FRAME_WIDTH, 90);
+        bottomPanel.setBounds(0, BOTTOM_PANEL_Y, FRAME_WIDTH, BOTTOM_PANEL_HEIGHT);
         bottomPanel.setLayout(null);
 
         pegSlots = new ArrayList<>(TOTAL_PEGS);
@@ -309,28 +313,7 @@ public class MainMasterMind implements ActionListener {
         exitLabel.setBounds(372, 35, 70, 20);
         bottomPanel.add(exitLabel);
 
-        String modeText;
-        switch (mode) {
-            case MODE_EASY:
-                modeText = "EASY";
-                break;
-            case MODE_NORMAL:
-                modeText = "NORMAL";
-                break;
-            case MODE_HARD:
-                modeText = "HARD";
-                break;
-            case MODE_EXTREME:
-                modeText = "EXTREME";
-                break;
-            case MODE_TWO_PLAYERS:
-                modeText = "TWO PLAYERS";
-                break;
-            default:
-                modeText = "";
-                break;
-        }
-        modeLabel.setText(modeText);
+        modeLabel.setText(mode >= 0 && mode < MODE_DISPLAY_NAMES.length ? MODE_DISPLAY_NAMES[mode] : "");
         modeLabel.setBounds(0, 35, FRAME_WIDTH, 20);
         bottomPanel.add(modeLabel);
         timerLabel.setBounds(0, 5, FRAME_WIDTH, 30);

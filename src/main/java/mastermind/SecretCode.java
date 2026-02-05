@@ -16,6 +16,9 @@ public final class SecretCode {
     private final String[] duplicatedColour;
 
     public SecretCode(String[] colours) {
+        if (colours == null || colours.length != COLS) {
+            throw new IllegalArgumentException("colours must be non-null and length " + COLS);
+        }
         this.colours = colours.clone();
         this.duplicatedColour = new String[2];
         this.serverDuplicate = countAndCollectDuplicates(this.colours, this.duplicatedColour);
@@ -30,9 +33,9 @@ public final class SecretCode {
         return serverDuplicate;
     }
 
-    /** Returns the array of up to 2 duplicated colour names (do not modify). */
+    /** Returns a copy of the array of up to 2 duplicated colour names. */
     public String[] getDuplicatedColour() {
-        return duplicatedColour;
+        return duplicatedColour.clone();
     }
 
     /**
